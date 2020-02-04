@@ -1,12 +1,15 @@
 package com.security.security.student;
 
 public class Student {
-    private final Long id;
-    private final String StudentName;
+    private Long id;
+    private String studentName;
+
+    public Student() {
+    }
 
     public Student(Long id, String studentName) {
         this.id = id;
-        StudentName = studentName;
+        this.studentName = studentName;
     }
 
     public Long getId() {
@@ -14,6 +17,14 @@ public class Student {
     }
 
     public String getStudentName() {
-        return StudentName;
+        return studentName;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", StudentName='" + studentName + '\'' +
+                '}';
     }
 }
