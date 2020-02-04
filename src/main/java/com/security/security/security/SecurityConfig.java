@@ -28,10 +28,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable() //TODO : I will teach this in detail in the next section
                 .authorizeRequests()
                 .antMatchers("/", "index", "/css/*", "/js/*")
                 .permitAll()
                 .antMatchers("/api/**").hasRole(STUDENT.name())
+                // Delete..
+                // Post..
+                // Put..
+                // Get methods
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -44,16 +49,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         UserDetails user_Anna = User.builder()
                 .username("anna")
                 .password(passwordEncoder.encode("123"))
-                .roles(STUDENT.name())
+                //      .roles(STUDENT.name())
+                .authorities(STUDENT.grantedAuthorities())
                 .build();
 
         UserDetails adminRoman = User.builder()
                 .username("roman")
                 .password(passwordEncoder.encode("admin"))
-                .roles(ADMIN.name())
+                //      .roles(ADMIN.name())
+                .authorities(ADMIN.grantedAuthorities())
                 .build();
 
-        return new InMemoryUserDetailsManager(user_Anna, adminRoman);
+
+        UserDetails user_Tom = User.builder()
+                .username("tom")
+                .password(passwordEncoder.encode("tom"))
+                //    .roles(ADMINTRAINEE.name())
+                .authorities(ADMINTRAINEE.grantedAuthorities())
+                .build();
+
+
+        return new InMemoryUserDetailsManager(user_Anna, adminRoman, user_Tom);
     }
 
 }
