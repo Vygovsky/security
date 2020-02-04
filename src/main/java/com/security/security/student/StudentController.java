@@ -17,9 +17,7 @@ public class StudentController {
             new Student(3L, "student_Roman")
     );
 
-    public StudentController() {
 
-    }
 
     @GetMapping(path = "{studentId}")
     public Student getStudent(@PathVariable("studentId") Long studentId) {
