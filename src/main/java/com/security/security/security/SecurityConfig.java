@@ -12,6 +12,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import java.util.concurrent.TimeUnit;
 
 import static com.security.security.security.ApplicationRole.*;
 
@@ -30,6 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "index", "/css/*", "/js/*")
                 .permitAll()
@@ -37,7 +41,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic();
+                .formLogin()
+                .loginPage("/login").permitAll()
+                    .defaultSuccessUrl("/course", true)
+                .and()
+                .rememberMe()//defaults to 2 weeks
+                    .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21))
+                    .key("somethingverysecured")
+                .and()
+                .logout()
+                    .logoutUrl("/logout")
+                    .clearAuthentication(true)
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID", "remember-me")
+                    .logoutSuccessUrl("/login");
     }
 
     @Override
