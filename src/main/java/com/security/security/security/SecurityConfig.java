@@ -46,6 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login").permitAll()
                     .defaultSuccessUrl("/course", true)
+                //.usernameParameter("username")
+                //.passwordParameter("password")
                 .and()
                 .rememberMe()//defaults to 2 weeks
                     .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21))
