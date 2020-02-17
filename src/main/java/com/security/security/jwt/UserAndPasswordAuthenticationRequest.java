@@ -1,18 +1,18 @@
 package com.security.security.jwt;
 
 public class UserAndPasswordAuthenticationRequest {
-   private String name;
+   private String username;
    private String password;
 
      public UserAndPasswordAuthenticationRequest() {
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

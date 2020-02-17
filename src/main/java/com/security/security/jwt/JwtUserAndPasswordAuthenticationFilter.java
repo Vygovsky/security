@@ -34,13 +34,13 @@ public class JwtUserAndPasswordAuthenticationFilter extends UsernamePasswordAuth
                     .readValue(request.getInputStream(), UserAndPasswordAuthenticationRequest.class);
 
             Authentication authentication = new UsernamePasswordAuthenticationToken(
-                    authenticationRequest.getName(),
+                    authenticationRequest.getUsername(),
                     authenticationRequest.getPassword()
             );
 
             return manager.authenticate(authentication);
         } catch (IOException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
 
