@@ -38,7 +38,8 @@ public class JwtUserAndPasswordAuthenticationFilter extends UsernamePasswordAuth
                     authenticationRequest.getPassword()
             );
 
-            return manager.authenticate(authentication);
+            Authentication authenticate = manager.authenticate(authentication);
+            return authenticate;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
